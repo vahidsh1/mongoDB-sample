@@ -1,0 +1,91 @@
+package com.example.invoice;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class PersonController {
+    @Autowired
+    MongoTemplate mongoTemplate;
+    @Autowired
+    private PersonRepository personRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+/*
+
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
+
+    @Value("${javainuse.rabbitmq.exchange}")
+    private String exchange;
+
+    @Value("${javainuse.rabbitmq.routingkey}")
+    private String routingkey;
+*/
+
+    @GetMapping
+    public void savePerson() throws JsonProcessingException {
+
+/*
+        Student person = new Student();
+        person.setName("minaahmadi");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s = objectMapper.writeValueAsString(person);
+
+        rabbitTemplate.convertAndSend(exchange, routingkey, s);
+//        System.out.println("Send msg = " + person);
+*/
+        Person person1 = new Person();
+        person1.setName("ali");
+        Address address = new Address();
+        address.setNo("51");
+        address.setStreet("tajrish");
+        person1.setAddress(address);
+        personRepository.save(person1);
+
+/*
+        List<String> addressIds = new ArrayList<>();
+        Person person = new Person();
+        person.setName("sina");
+        Address address = new Address();
+        address.setNo("51");
+        address.setStreet("tajrish");
+        Address savedAddress = addressRepository.save(address);
+        addressIds.add(savedAddress.getId());
+        person.setAddress(addressIds);
+        personRepository.save(person);
+*/
+
+
+    }
+//    @GetMapping("/findAll")
+//    public void findAllPerson()
+//    {
+//        Query query = new Query(Criteria.where("id").is("63a447cfd65b6a02e24b7400"));
+//        Update update = new Update();
+//        update.set("age", 12);
+//
+//        UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
+//
+//        if(result == null)
+//            System.out.println("No documents updated");
+//        else
+//            System.out.println(result.getModifiedCount() + " document(s) updated..");
+//
+//
+//
+//
+//    }
+}
